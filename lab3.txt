@@ -1,0 +1,44 @@
+6.1.2:
+CREATE TABLE movies(title VARCHAR(255), year YEAR, length VARCHAR(30), genre VARCHAR(50), studioName VARCHAR(75), producerC# INT);
+CREATE TABLE StarsIn (movieTitle VARCHAR(255), movieYear YEAR, starName VARCHAR(255);
+CREATE TABLE MovieStar(name VARCHAR(255), address VARCHAR(255),  gender VARCHAR(10), birthdate DATE);
+CREATE TABLE MovieExec(name VARCHAR(255), address VARCHAR(255), cert# INT, netWorth FLOAT);
+CREATE TABLE Studio(name VARCHAR(255), address VARCHAR(255), presC# INT);
+
+a) SELECT address from Studio WHERE name='MGM';
+b) SELECT birthdate FROM MovieStar WHERE name='Sandra Bullock';
+c) SELECT starName FROM StarsIn WHERE movieYear=1980 or movieTitle='%Love%';
+d) SELECT * FROM MovieExec WHERE netWorth > 10000000.00;
+e) SELECT * FROM MovieStar WHERE gender='male' or address LIKE '%Malibu%';
+
+6.1.3: 
+a) SELECT model, speed, hd FROM PC WHERE price<1000
+
+b) SELECT model, speed AS gigahertz, hd AS gigabytes FROM PC WHERE price<1000
+
+c) SELECT DISTINCT maker from Product WHERE type='printer'; 
+
+d) SELECT model, ram, screen FROM Laptop WHERE price>1500;
+
+e) SELECT * FROM Printer WHERE color=true;
+
+f) SELECT model, hd FROM PC WHERE speed=3.2 AND price<200;
+
+6.1.4:
+a) SELECT class, country FROM Classes WHERE numGuns>=10; 
+b) SELECT name AS shipName FROM Ships WHERE launched<1918;
+c) SELECT name, battle FROM Outcomes WHERE result='sunk';
+d) SELECT * FROM Ships WHERE WHERE name=class;
+e) SELECT name FROM Ships WHERE name LIKE 'r%'; 
+f) SELECT name FROM Ships WHERE name LIKE '% % %';
+
+
+
+
+
+
+
+
+
+
+
