@@ -1,0 +1,230 @@
+1. 
+ public static void main(String[] args) throws SQLException, ClassNotFoundException {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/soccer", "root", "kole");
+            Statement stmt = conn.createStatement();    
+            String query = "SELECT players.firstname, players.lastname, players.number FROM players INNER JOIN team on players.teamId = team.id WHERE players.teamId=1";
+
+            ResultSet rset = stmt.executeQuery(query);
+            while(rset.next()){
+                System.out.println(rset.getString("name") + " - " + rset.getInt("number"));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+            
+    }
+
+2.
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/soccer", "root", "kole");
+            Statement stmt = conn.createStatement();    
+            String query = "SELECT players.firstname, players.lastname players.number FROM players INNER JOIN team on teams.teamId = players.teamID WHERE team.name ='Arsenal' ORDER BY players.lastname" ;
+
+            ResultSet rset = stmt.executeQuery(query);
+            while(rset.next()){
+                System.out.println(rset.getString("name") + " - " + rset.getInt("number"));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+            
+    }
+
+3. 
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/soccer", "root", "kole");
+            Statement stmt = conn.createStatement();    
+            String query = "SELECT players.firstname, players.lastname, players.number FROM players INNER JOIN team on teams.teamId = players.teamID WHERE team.name ='Arsenal' ORDER BY players.number" ;
+
+            ResultSet rset = stmt.executeQuery(query);
+            while(rset.next()){
+                System.out.println(rset.getString("name") + " - " + rset.getInt("number"));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+            
+    }
+
+4. 
+public static void main(String[] args) throws SQLException, ClassNotFoundException {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/soccer", "root", "kole");
+            Statement stmt = conn.createStatement();    
+            String update = "UPDATE players
+                            SET firstname = 'UpdatedFirstName',
+                            lastname = 'UpdatedLastName',
+                            dob = '1990-01-01',
+                            year = 2024,
+                            number = 77
+                            WHERE id = 5";
+            int change = stmt.executeUpdate(update);
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+
+5. 
+        public static void main(String[] args) throws SQLException, ClassNotFoundException {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/soccer", "root", "kole");
+            Statement stmt = conn.createStatement();    
+            String newTeam = "INSERT INTO team (
+                name, stadium , city) VALUES('Test123', 'Koles Stadium', poughkeepsie)";
+            int change1 = stmt.executeUpdate(newTeam);
+
+            String newPlayer1 = "INSERT INTO players (firstname, lastname, dob, year, number) VALUES ('John', 'Doe', '1995-04-15', 2023, 23)";
+            int change2 = stmt.executeUpdate(newPlayer1);
+
+            String newPlayer1 = "INSERT INTO players (firstname, lastname, dob, year, number) VALUES ('John1', 'Do2e', '1995-04-18', 2022, 22)";
+            int change3 = stmt.executeUpdate(newPlayer2);
+
+            String newPlayer1 = "INSERT INTO players (firstname, lastname, dob, year, number) VALUES ('John2', 'Doe2', '1995-04-17', 2021, 21)";
+            int change4= stmt.executeUpdate(newPlayer3);
+            
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+6.
+    public static void main(String[] args){
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter the team name: ");
+        String teamName = scanner.nextLine();
+        
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/soccer", "root", "kole");
+            
+               
+            String query = "SELECT * FROM players inner join teams on teams.teamId = players.teamID WHERE team.name = ?";
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setString(1, teamName);
+
+            ResultSet resultSet = stmt.executeQuery(query);
+            while (resultSet.next()) {
+                String firstName = resultSet.getString("firstname");
+                String lastName = resultSet.getString("lastname");   
+
+                System.out.println(firstName + " " + lastName);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+7.
+
+package mysql.src;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.mysql.cj.x.protobuf.MysqlxDatatypes.Scalar.String;
+
+public class Player {
+    private int id;
+    private String firstName;
+    private String lastName;
+    private int teamId; 
+    private int number; 
+
+    public Player(int id, String firstName, String lastName, String position, int shirtNumber) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.shirtNumber = shirtNumber;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+    public String getShirtNumber() {
+        return shirtNumber;
+    }
+
+    public void setShirtNumber(String shirtNumber) {
+        this.shirtNumber = shirtNumber;
+    }
+
+    public static List<Player> getPlayersFromDatabase() {
+        List<Player> players = new ArrayList<>();
+
+        try {
+        
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/soccer", "root", "kole");
+            String query = "SELECT * FROM players";
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String firstName = resultSet.getString("firstname");
+                String lastName = resultSet.getString("lastname"); 
+                int shirtNumber = resultSet.getInt("number");
+                players.add(new Player(id, firstName, lastName, shirtNumber));
+            }
+
+            resultSet.close();
+            statement.close();
+            connection.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+
+        return players;
+    }
+    public static List<Player> getPlayersByShirtNumber(List<Player> players, int shirtNumber) {
+        List<Player> result = new ArrayList<>();
+
+        try {
+        
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/soccer", "root", "kole");
+            String query = "SELECT * FROM players WHERE number = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, shirtNumber);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String firstName = resultSet.getString("firstname");
+                String lastName = resultSet.getString("lastname");  
+                int shirtNumber = resultSet.getInt("number");
+                players.add(new Player(id, firstName, lastName, number));
+            }
+
+            resultSet.close();
+            statement.close();
+            connection.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+
+        return players;
+    }
+}
