@@ -1,0 +1,65 @@
+CREATE TABLE Foods (
+    food_id INT AUTO_INCREMENT PRIMARY KEY,
+    food_name VARCHAR(255),
+    calories INT,
+    fat INT,
+    carbs INT,
+    protein INT,
+    serving_size INT,
+    serving_size_unit VARCHAR(255)
+);
+CREATE TABLE MicroNutrients (
+    micro_nutrient_id INT AUTO_INCREMENT PRIMARY KEY,
+    vitamin_a INT,
+    vitamin_c INT,
+    calcium INT,
+    iron INT,
+    potassium INT,
+    magnesium INT,
+    FOREIGN KEY (food_id) REFERENCES Foods(food_id)
+);
+CREATE TABLE Users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255),
+    email VARCHAR(255),
+    phone_number VARCHAR(20),
+    membership_type INT
+);
+CREATE TABLE Goals (
+    goal_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    goal_calories INT,
+    goal_carbs INT,
+    goal_fats INT,
+    goal_protein INT,
+    FOREIGN KEY (user_id) REFERENCES Users(user_id)
+);
+
+GOALS INSERT: 
+INSERT INTO Goals (user_id, goal_calories, goal_carbs, goal_fats, goal_protein)
+VALUES (1, 2000, 150, 50, 100);
+INSERT INTO Goals (user_id, goal_calories, goal_carbs, goal_fats, goal_protein)
+VALUES (2, 1800, 120, 40, 120);
+INSERT INTO Goals (user_id, goal_calories, goal_carbs, goal_fats, goal_protein)
+VALUES (3, 2500, 200, 70, 150);
+
+FOOD INSERTS:
+INSERT INTO Foods (food_name, calories, fat, carbs, protein, serving_size, serving_size_unit)
+VALUES ('Apple', 95, 0.2, 25, 1, 1, 'medium');
+INSERT INTO Foods (food_name, calories, fat, carbs, protein, serving_size, serving_size_unit)
+VALUES ('Chicken Breast', 165, 3, 0, 31, 100, 'grams');
+INSERT INTO Foods (food_name, calories, fat, carbs, protein, serving_size, serving_size_unit)
+VALUES ('Oatmeal', 150, 2, 27, 5, 1/2, 'cup')
+
+USER INSERTS: 
+INSERT INTO Users (name, email, phone_number, membership_type)
+VALUES ('John Doe', 'johndoe@example.com', '1234567890', 1);
+INSERT INTO Users (name, email, phone_number, membership_type)
+VALUES ('Jane Smith', 'janesmith@example.com', '9876543210', 2);
+INSERT INTO Users (name, email, phone_number, membership_type)
+VALUES ('Alice Johnson', 'alicejohnson@example.com', '5555555555', 3);
+
+Micro INSERTS:
+INSERT INTO MicroNutrients (food_id, vitamin_a, vitamin_c, calcium, iron, potassium, magnesium) VALUES (1, 1000, 50, 100, 2, 400, 100);
+INSERT INTO MicroNutrients (food_id, vitamin_a, vitamin_c, calcium, iron, potassium, magnesium) VALUES (2, 200, 0, 150, 5, 300, 80);
+INSERT INTO MicroNutrients (food_id, vitamin_a, vitamin_c, calcium, iron, potassium, magnesium) VALUES (3, 50, 10, 80, 1, 250, 120);
