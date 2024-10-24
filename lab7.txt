@@ -1,0 +1,261 @@
+1.
+    @Test
+    public void testStringEqualityIgnoreCase() {
+        String strOne = "Hello";
+        String strTwo = "hello";
+
+        assertEquals(strOne.toLowerCase(), strTwo.toLowerCase());
+    }
+
+2. 
+    @Test
+    public void testArrayValuesGreaterThan20() {
+        int[] values = {21, 22, 23, 24, 25};
+
+        for (int value : values) {
+            assertTrue(value >= 20);
+        }
+    }
+
+3. 
+    @Test
+    public void testStringBufferReferenceEquality() {
+        StringBuffer sbOne = new StringBuffer("hello");
+        StringBuffer sbTwo = sbOne;
+
+        assertSame(sbOne, sbTwo);
+    }
+
+4. Yes. One method failing will not cause the entire class to stop executing. 
+
+5. 
+public class StringMethodsTest {
+
+    @Test
+    public void testIsPalindrome_emptyString() {
+        assertTrue(StringMethods.isPalindrome(""));
+    }
+
+    @Test
+    public void testIsPalindrome_singleCharacter() {
+        assertTrue(StringMethods.isPalindrome("a"));
+    }
+
+    @Test
+    public void testIsPalindrome_simplePalindrome() {
+        assertTrue(StringMethods.isPalindrome("racecar"));
+    }
+
+    @Test
+    public void testIsPalindrome_palindromeWithSpaces() {
+        assertTrue(StringMethods.isPalindrome("A man, a plan, a canal, Panama!"));
+    }
+
+    @Test
+    public void testIsPalindrome_notPalindrome() {
+        assertFalse(StringMethods.isPalindrome("hello"));
+    }
+
+    @Test
+    public void testReverse_emptyString() {
+        assertEquals("", StringMethods.reverse(""));
+    }
+
+    @Test
+    public void testReverse_singleCharacter() {
+        assertEquals("a", StringMethods.reverse("a"));
+    }
+
+    @Test
+    public void testReverse_simpleString() {
+        assertEquals("olleh", StringMethods.reverse("hello"));
+    }
+
+    @Test
+    public void testReverse_stringWithSpaces() {
+        assertEquals("!amanap ,lanac a ,nalp a ,nam A", StringMethods.reverse("A man, a plan, a canal, Panama!"));
+    }
+}
+
+
+6. 
+
+public class ComputationsTest {
+
+    @Test
+    public void testFibonacci_negativeInput() {
+        assertThrows(IllegalArgumentException.class, () -> Computations.fibonacci(-1));
+    }
+
+    @Test
+    public void testFibonacci_baseCases() {
+        assertEquals(0, Computations.fibonacci(0));
+        assertEquals(1, Computations.fibonacci(1));
+    }
+
+    @Test
+    public void testFibonacci_regularValues() {
+        assertEquals(1, Computations.fibonacci(2));
+        assertEquals(2, Computations.fibonacci(3));
+        assertEquals(5, Computations.fibonacci(5));
+        assertEquals(13, Computations.fibonacci(7));
+    }
+
+    @Test
+    public void testIsPrime_negativeInput() {
+        assertFalse(Computations.isPrime(-1));
+    }
+
+    @Test
+    public void testIsPrime_edgeCases() {
+        assertFalse(Computations.isPrime(0));
+        assertFalse(Computations.isPrime(1));
+    }
+
+    @Test
+    public void testIsPrime_smallPrimes() {
+        assertTrue(Computations.isPrime(2));
+        assertTrue(Computations.isPrime(3));
+        assertTrue(Computations.isPrime(5));
+        assertTrue(Computations.isPrime(7));
+    }
+
+    @Test
+    public void testIsPrime_compositeNumbers() {
+        assertFalse(Computations.isPrime(4));
+        assertFalse(Computations.isPrime(6));
+        assertFalse(Computations.isPrime(8));
+        assertFalse(Computations.isPrime(9));
+    }
+
+    @Test
+    public void testIsEven_evenNumbers() {
+        assertTrue(Computations.isEven(0));
+        assertTrue(Computations.isEven(2));
+        assertTrue(Computations.isEven(4));
+        assertTrue(Computations.isEven(6));
+    }
+
+    @Test
+    public void testIsEven_oddNumbers() {
+        assertFalse(Computations.isEven(1));
+        assertFalse(Computations.isEven(3));
+        assertFalse(Computations.isEven(5));
+        assertFalse(Computations.isEven(7));
+    }
+
+    @Test
+    public void testIsOdd_evenNumbers() {
+        assertFalse(Computations.isOdd(0));
+        assertFalse(Computations.isOdd(2));
+        assertFalse(Computations.isOdd(4));
+        assertFalse(Computations.isOdd(6));
+    }
+
+    @Test
+    public void testIsOdd_oddNumbers() {
+        assertTrue(Computations.isOdd(1));
+        assertTrue(Computations.isOdd(3));
+        assertTrue(Computations.isOdd(5));
+        assertTrue(Computations.isOdd(7));
+    }
+
+    @Test
+    public void testToCelsius_conversion() {
+        assertEquals(0.0, Computations.toCelsius(32.0));
+        assertEquals(100.0, Computations.toCelsius(212.0));
+        assertEquals(37.7778, Computations.toCelsius(100.0));
+    }
+
+    @Test
+    public void testToFahrenheit_conversion() {
+        assertEquals(32.0, Computations.toFahrenheit(0.0));
+        assertEquals(212.0, Computations.toFahrenheit(100.0));
+        assertEquals(99.6, Computations.toFahrenheit(37.5));
+    }
+}
+
+7.
+
+public class PersonTest {
+
+    @Test
+    public void testEquals_sameObject() {
+        Person person = new Person("John", "Doe", 30);
+        assertTrue(person.equals(person));
+    }
+
+    @Test
+    public void testEquals_nullObject() {
+        Person person = new Person("John", "Doe", 30);
+        assertFalse(person.equals(null));
+    }
+
+    @Test
+    public void testEquals_differentClass() {
+        Person person = new Person("John", "Doe", 30);
+        Object obj = new Object();
+        assertFalse(person.equals(obj));
+    }
+
+    @Test
+    public void testEquals_differentAge() {
+        Person person1 = new Person("John", "Doe", 30);
+        Person person2 = new Person("John", "Doe", 35);
+        assertFalse(person1.equals(person2));
+    }
+
+    @Test
+    public void testEquals_differentName() {
+        Person person1 = new Person("John", "Doe", 30);
+        Person person2 = new Person("Jane", "Doe", 30);
+        assertFalse(person1.equals(person2));
+    }
+
+    @Test
+    public void testEquals_sameNameAndAge() {
+        Person person1 = new Person("John", "Doe", 30);
+        Person person2 = new Person("John", "Doe", 30);
+        assertTrue(person1.equals(person2));
+    }
+
+    @Test
+    public void testCompareTo_positive() {
+        Person person1 = new Person("John", "Doe", 35);
+        Person person2 = new Person("Jane", "Doe", 30);
+        assertTrue(person1.compareTo(person2) > 0);
+    }
+
+    @Test
+    public void testCompareTo_negative() {
+        Person person1 = new Person("John", "Doe", 30);
+        Person person2 = new Person("Jane", "Doe", 35);
+        assertTrue(person1.compareTo(person2) < 0);
+    }
+
+    @Test
+    public void testCompareTo_equal() {
+        Person person1 = new Person("John", "Doe", 30);
+        Person person2 = new Person("Jane", "Doe", 30);
+        assertEquals(0, person1.compareTo(person2));
+    }
+
+    @Test
+    public void testSetAge_validAge() {
+        Person person = new Person("John", "Doe", 30);
+        person.setAge(35);
+        assertEquals(35, person.getAge());
+    }
+
+    @Test
+    public void testSetAge_invalidAge_negative() {
+        Person person = new Person("John", "Doe", 30);
+        assertThrows(IllegalArgumentException.class, () -> person.setAge(-1));
+    }
+
+    @Test
+    public void testSetAge_invalidAge_tooLarge() {
+        Person person = new Person("John", "Doe", 30);
+        assertThrows(IllegalArgumentException.class, () -> person.setAge(200));
+    }
+}
