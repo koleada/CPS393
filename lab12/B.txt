@@ -1,0 +1,57 @@
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.function.Function;
+
+public class Project {
+
+    public static void main(String[] args) throws SQLException {
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/project", "root", "kole");
+
+        // Using Function to compute total calories of foods
+        Function<Connection, Integer> computeTotalCalories = connection -> {
+            String query = "SELECT SUM(goal_calories) AS total_calories FROM Goals";
+            try (PreparedStatement statement = connection.prepareStatement(query);
+                 ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("total_calories");
+                } else {
+                    throw new SQLException("No data found in Goals table.");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return -1; // Return an invalid value on error
+            }
+        };
+
+        int totalCalories = computeTotalCalories.apply(conn);
+        System.out.println("Total calories in Goals table: " + totalCalories);
+
+        // Using Function to filter foods based on protein content
+        Function<Connection, String> filterHighProteinFoods = connection -> {
+            String query = """
+                    SELECT food_name
+                    FROM foods
+                    WHERE protein > 10
+                    ORDER BY protein DESC;
+                    """;
+            StringBuilder highProteinFoods = new StringBuilder();
+            try (PreparedStatement statement = connection.prepareStatement(query);
+                 ResultSet resultSet = statement.executeQuery()) {
+
+                while (resultSet.next()) {
+                    highProteinFoods.append(resultSet.getString("food_name")).append("\n");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return highProteinFoods.toString();
+        };
+
+        String highProteinFoodList = filterHighProteinFoods.apply(conn);
+        System.out.println("High Protein Foods:\n" + highProteinFoodList);
+
+        conn.close();
+    }
+}
